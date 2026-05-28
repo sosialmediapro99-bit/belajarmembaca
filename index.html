@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AkuBisa! - Belajar Huruf A-Z</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#FFF9F0;
+  --dark:#2D2D2D;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  overflow-x:hidden;
+}
+
+/* INTRO */
+#introOverlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+}
+
+.intro-animation{
+  width:100%;
+  height:100vh;
+  background:linear-gradient(180deg,#87CEEB 0%,#FFF9F0 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+
+.intro-center{
+  text-align:center;
+  z-index:5;
+}
+
+.intro-rainbow{
+  font-size:7rem;
+  animation:floaty 2s ease-in-out infinite;
+}
+
+.intro-center h1{
+  font-family:'Fredoka One',cursive;
+  color:white;
+  font-size:5rem;
+  text-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.intro-center p{
+  color:white;
+  font-size:1.5rem;
+  font-weight:800;
+}
+
+@keyframes floaty{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+
+.intro-preview{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  margin-top:40px;
+  flex-wrap:wrap;
+}
+
+.preview-card{
+  background:white;
+  border-radius:24px;
+  padding:20px 28px;
+  font-size:2rem;
+  font-weight:900;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  animation:bounceCard 2s infinite;
+}
+
+.preview-card:nth-child(2){animation-delay:.3s}
+.preview-card:nth-child(3){animation-delay:.6s}
+
+@keyframes bounceCard{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+.intro-cloud{
+  position:absolute;
+  background:rgba(255,255,255,.8);
+  border-radius:100px;
+}
+
+.cloud1{
+  width:220px;
+  height:80px;
+  top:15%;
+  left:-250px;
+  animation:cloudMove 25s linear infinite;
+}
+
+.cloud2{
+  width:170px;
+  height:65px;
+  top:40%;
+  left:-220px;
+  animation:cloudMove 18s linear infinite;
+}
+
+.cloud3{
+  width:260px;
+  height:90px;
+  top:65%;
+  left:-300px;
+  animation:cloudMove 30s linear infinite;
+}
+
+@keyframes cloudMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(140vw)}
+}
+
+#skipBtn{
+  position:absolute;
+  bottom:40px;
+  right:40px;
+  background:white;
+  border:none;
+  padding:14px 28px;
+  border-radius:999px;
+  font-size:1rem;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+/* MAIN */
+#mainApp{
+  display:none;
+  min-height:100vh;
+  flex-direction:column;
+  align-items:center;
+}
+
+.bg-shapes{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.shape{
+  position:absolute;
+  border-radius:50%;
+  opacity:.1;
+  animation:floatShape linear infinite;
+}
+
+@keyframes floatShape{
+  0%{transform:translateY(110vh) rotate(0deg)}
+  100%{transform:translateY(-20vh) rotate(360deg)}
+}
+
+header{
+  padding:30px 20px 10px;
+  text-align:center;
+  z-index:5;
+}
+
+.logo-wrap{
+  background:white;
+  display:inline-flex;
+  gap:12px;
+  align-items:center;
+  padding:12px 28px;
+  border-radius:30px;
+  box-shadow:0 8px 30px rgba(0,0,0,.1);
+}
+
+.logo-text{
+  font-family:'Fredoka One',cursive;
+  font-size:2.2rem;
+  background:linear-gradient(135deg,#FF5252,#FFD600,#4CAF50,#2196F3,#9C27B0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+  margin-top:14px;
+  color:#666;
+  font-weight:800;
+}
+
+.display-section{
+  width:100%;
+  max-width:950px;
+  padding:20px;
+}
+
+.big-card{
+  background:white;
+  border-radius:32px;
+  padding:30px;
+  box-shadow:0 12px 40px rgba(0,0,0,.12);
+  display:flex;
+  gap:30px;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.big-letter-display{
+  font-size:10rem;
+  font-family:'Fredoka One',cursive;
+  min-width:120px;
+  text-align:center;
+}
+
+
+
+@keyframes popImage{
+  from{transform:scale(.5);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.big-word{
+  font-size:2.8rem;
+  font-family:'Fredoka One',cursive;
+}
+
+.big-desc{
+  margin-top:10px;
+  color:#666;
+  font-weight:700;
+}
+
+.wave-btn{
+  width:70px;
+  height:70px;
+  border:none;
+  border-radius:50%;
+  font-size:2rem;
+  cursor:pointer;
+  color:white;
+}
+
+.grid-section{
+  width:100%;
+  max-width:950px;
+  padding:20px;
+}
+
+.grid-label{
+  text-align:center;
+  font-family:'Fredoka One',cursive;
+  margin-bottom:20px;
+  font-size:1.5rem;
+}
+
+.letters-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
+  gap:12px;
+}
+
+.letter-btn{
+  border:none;
+  border-radius:24px;
+  aspect-ratio:1;
+  color:white;
+  font-size:2rem;
+  font-family:'Fredoka One',cursive;
+  cursor:pointer;
+  box-shadow:0 8px 0 rgba(0,0,0,.15);
+  transition:.2s;
+}
+
+.letter-btn:hover{
+  transform:translateY(-5px);
+}
+
+.letter-btn:active{
+  transform:translateY(6px);
+  box-shadow:none;
+}
+
+.status-bar{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#222;
+  color:white;
+  padding:12px 26px;
+  border-radius:999px;
+  font-weight:700;
+  z-index:999;
+}
+
+@media(max-width:700px){
+  .big-card{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .big-word{
+    font-size:2rem;
+  }
+
+  .big-letter-display{
+    font-size:5rem;
+  }
+
+  #wordImage{
+    width:160px;
+    height:160px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div id="introOverlay">
+  <div class="intro-animation">
+
+    <div class="intro-cloud cloud1"></div>
+    <div class="intro-cloud cloud2"></div>
+    <div class="intro-cloud cloud3"></div>
+
+    <div class="intro-center">
+      <div class="intro-rainbow">🌈</div>
+      <h1>AkuBisa!</h1>
+      <p>Belajar Huruf A sampai Z</p>
+
+      <div class="intro-preview">
+        <div class="preview-card">🍎 A</div>
+        <div class="preview-card">🐱 K</div>
+        <div class="preview-card">🦓 Z</div>
+      </div>
+    </div>
+
+    <button id="skipBtn">Mulai ▶</button>
+  </div>
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8f7f6e70a.mp3?filename=children-background-music-112191.mp3" type="audio/mp3">
+</audio>
+
+<!-- MAIN -->
+<div id="mainApp">
+
+  <div class="bg-shapes" id="bgShapes"></div>
+
+  <header>
+    <div class="logo-wrap">
+      <span>🌈</span>
+      <span class="logo-text">AkuBisa!</span>
+    </div>
+
+    <div class="subtitle">Belajar Huruf A-Z sambil Bermain 🎉</div>
+  </header>
+
+  <div class="display-section">
+    <div class="big-card" id="bigCard">
+      <div class="big-letter-display" id="bigLetter">A</div>
+
+      
+
+      <div>
+        <div class="big-word" id="bigWord">A - Apel</div>
+        <div class="big-desc" id="bigDesc">A seperti Apel merah segar!</div>
+      </div>
+
+      <button class="wave-btn" id="repeatBtn">🔊</button>
+    </div>
+  </div>
+
+  <div class="grid-section">
+    <div class="grid-label">🔤 Pilih Huruf Favoritmu!</div>
+    <div class="letters-grid" id="lettersGrid"></div>
+  </div>
+</div>
+
+<div class="status-bar" id="statusBar">🔊 Memainkan suara...</div>
+
+<script>
+const LETTER_DATA = {
+A:{word:'Apel',emoji:'🍎',image:'https://cdn-icons-png.flaticon.com/512/415/415733.png',desc:'A seperti Apel merah segar!',color:'#FF5252'},
+B:{word:'Balon',emoji:'🎈',image:'https://cdn-icons-png.flaticon.com/512/3468/3468377.png',desc:'B seperti Balon warna-warni!',color:'#2196F3'},
+C:{word:'Ceri',emoji:'🍒',image:'https://cdn-icons-png.flaticon.com/512/590/590685.png',desc:'C seperti buah Ceri manis!',color:'#E91E63'},
+D:{word:'Domba',emoji:'🐑',image:'https://cdn-icons-png.flaticon.com/512/616/616430.png',desc:'D seperti Domba lucu!',color:'#FF9800'},
+E:{word:'Es',emoji:'🍦',image:'https://cdn-icons-png.flaticon.com/512/3081/3081985.png',desc:'E seperti Es krim dingin!',color:'#00BCD4'},
+F:{word:'Foto',emoji:'📸',image:'https://cdn-icons-png.flaticon.com/512/685/685655.png',desc:'F seperti Foto yang indah!',color:'#9C27B0'},
+G:{word:'Gajah',emoji:'🐘',image:'https://cdn-icons-png.flaticon.com/512/3069/3069172.png',desc:'G seperti Gajah besar!',color:'#4CAF50'},
+H:{word:'Hati',emoji:'❤️',image:'https://cdn-icons-png.flaticon.com/512/833/833472.png',desc:'H seperti Hati penuh cinta!',color:'#F44336'},
+I:{word:'Ikan',emoji:'🐟',image:'https://cdn-icons-png.flaticon.com/512/616/616408.png',desc:'I seperti Ikan di laut!',color:'#03A9F4'},
+J:{word:'Jeruk',emoji:'🍊',image:'https://cdn-icons-png.flaticon.com/512/590/590753.png',desc:'J seperti Jeruk segar!',color:'#FF9800'},
+K:{word:'Kucing',emoji:'🐱',image:'https://cdn-icons-png.flaticon.com/512/616/616430.png',desc:'K seperti Kucing lucu!',color:'#FF7043'},
+L:{word:'Lemon',emoji:'🍋',image:'https://cdn-icons-png.flaticon.com/512/590/590749.png',desc:'L seperti Lemon kuning!',color:'#FFD600'},
+M:{word:'Mobil',emoji:'🚗',image:'https://cdn-icons-png.flaticon.com/512/744/744465.png',desc:'M seperti Mobil!',color:'#3F51B5'},
+N:{word:'Nanas',emoji:'🍍',image:'https://cdn-icons-png.flaticon.com/512/590/590744.png',desc:'N seperti Nanas manis!',color:'#8BC34A'},
+O:{word:'Obor',emoji:'🔥',image:'https://cdn-icons-png.flaticon.com/512/785/785116.png',desc:'O seperti Obor menyala!',color:'#FF5722'},
+P:{word:'Pisang',emoji:'🍌',image:'https://cdn-icons-png.flaticon.com/512/590/590685.png',desc:'P seperti Pisang!',color:'#FFC107'},
+Q:{word:'Quran',emoji:'📖',image:'https://cdn-icons-png.flaticon.com/512/3145/3145765.png',desc:'Q seperti Quran!',color:'#607D8B'},
+R:{word:'Robot',emoji:'🤖',image:'https://cdn-icons-png.flaticon.com/512/4712/4712109.png',desc:'R seperti Robot!',color:'#9C27B0'},
+S:{word:'Semangka',emoji:'🍉',image:'https://cdn-icons-png.flaticon.com/512/590/590762.png',desc:'S seperti Semangka!',color:'#4CAF50'},
+T:{word:'Telur',emoji:'🥚',image:'https://cdn-icons-png.flaticon.com/512/837/837560.png',desc:'T seperti Telur!',color:'#795548'},
+U:{word:'Ulat',emoji:'🐛',image:'https://cdn-icons-png.flaticon.com/512/3069/3069162.png',desc:'U seperti Ulat!',color:'#8BC34A'},
+V:{word:'Vas',emoji:'🏺',image:'https://cdn-icons-png.flaticon.com/512/2936/2936886.png',desc:'V seperti Vas bunga!',color:'#9C27B0'},
+W:{word:'Wortel',emoji:'🥕',image:'https://cdn-icons-png.flaticon.com/512/590/590762.png',desc:'W seperti Wortel!',color:'#FF6F00'},
+X:{word:'Xylophone',emoji:'🎼',image:'https://cdn-icons-png.flaticon.com/512/3659/3659784.png',desc:'X seperti Xylophone!',color:'#E91E63'},
+Y:{word:'Yoyo',emoji:'🪀',image:'https://cdn-icons-png.flaticon.com/512/3082/3082035.png',desc:'Y seperti Yoyo!',color:'#795548'},
+Z:{word:'Zebra',emoji:'🦓',image:'https://cdn-icons-png.flaticon.com/512/3069/3069186.png',desc:'Z seperti Zebra!',color:'#37474F'}
+};
+
+const COLORS = ['#FF5252','#FF9800','#FFD600','#4CAF50','#2196F3','#9C27B0'];
+
+const introOverlay = document.getElementById('introOverlay');
+const skipBtn = document.getElementById('skipBtn');
+const mainApp = document.getElementById('mainApp');
+
+skipBtn.onclick = () => {
+  introOverlay.style.display = 'none';
+  mainApp.style.display = 'flex';
+
+  document.getElementById('bgMusic').volume = .18;
+
+  buildShapes();
+  buildGrid();
+};
+
+function buildShapes(){
+  const bg = document.getElementById('bgShapes');
+
+  for(let i=0;i<18;i++){
+    const s = document.createElement('div');
+    s.className = 'shape';
+
+    const size = 40 + Math.random()*120;
+
+    s.style.cssText = `
+      width:${size}px;
+      height:${size}px;
+      left:${Math.random()*100}%;
+      background:${COLORS[i%COLORS.length]};
+      animation-duration:${8+Math.random()*12}s;
+    `;
+
+    bg.appendChild(s);
+  }
+}
+
+function buildGrid(){
+  const grid = document.getElementById('lettersGrid');
+
+  Object.keys(LETTER_DATA).forEach((letter,index)=>{
+
+    const btn = document.createElement('button');
+
+    btn.className = 'letter-btn';
+    btn.style.background = COLORS[index%COLORS.length];
+
+    btn.innerHTML = `${letter}<div style="font-size:1rem">${LETTER_DATA[letter].emoji}</div>`;
+
+    btn.onclick = ()=> handleLetter(letter,btn);
+
+    grid.appendChild(btn);
+  });
+}
+
+function handleLetter(letter,btn){
+  const data = LETTER_DATA[letter];
+
+  document.getElementById('bigLetter').textContent = letter;
+  document.getElementById('bigLetter').style.color = data.color;
+
+  document.getElementById('bigWord').innerHTML = `${letter} - ${data.word}`;
+  document.getElementById('bigDesc').innerHTML = 'Tekan huruf lain untuk belajar!';
+
+  document.getElementById('repeatBtn').style.background = data.color;
+
+  speakLetter(letter,data.word);
+}
+
+function speakLetter(letter,word){
+
+  if(!window.speechSynthesis) return;
+
+  window.speechSynthesis.cancel();
+
+  const kalimat = `${letter}`;
+
+  const utter = new SpeechSynthesisUtterance(kalimat);
+
+  utter.lang = 'id-ID';
+  utter.rate = .55;
+  utter.pitch = 1.35;
+  utter.volume = 1;
+
+  const voices = speechSynthesis.getVoices();
+
+  const voiceWanita = voices.find(v=>
+    v.lang.includes('id')
+  );
+
+  if(voiceWanita){
+    utter.voice = voiceWanita;
+  }
+
+  document.getElementById('statusBar').innerHTML = `🔊 ${kalimat}`;
+
+  speechSynthesis.speak(utter);
+}
+
+window.speechSynthesis.onvoiceschanged = ()=>{
+  speechSynthesis.getVoices();
+};
+</script>
+
+</body>
+</html>
